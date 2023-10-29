@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxhbmigac5v66"
-path="res://.godot/imported/dirt_full_new.png-2665417c4802e35937c97d784ef41d02.ctex"
+uid="uid://eof5o8mqy7pk"
+path="res://.godot/imported/cyclops.png-2e318dd0bea6a7d6357f8e976eccd2cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/dirt_full_new.png"
-dest_files=["res://.godot/imported/dirt_full_new.png-2665417c4802e35937c97d784ef41d02.ctex"]
+source_file="res://textures/enemies/cyclops.png"
+dest_files=["res://.godot/imported/cyclops.png-2e318dd0bea6a7d6357f8e976eccd2cc.ctex"]
 
 [params]
 

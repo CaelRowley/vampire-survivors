@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v6ucloex4asu"
-path="res://.godot/imported/juggernaut.png-cbf942f4a32a39fa912afc11a587cfce.ctex"
+uid="uid://gvebf6mil3xx"
+path="res://.godot/imported/kolbold_weak.png-5fb283c2eae98db0e8326a88445dfecc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/enemy/juggernaut.png"
-dest_files=["res://.godot/imported/juggernaut.png-cbf942f4a32a39fa912afc11a587cfce.ctex"]
+source_file="res://textures/enemies/kolbold_weak.png"
+dest_files=["res://.godot/imported/kolbold_weak.png-5fb283c2eae98db0e8326a88445dfecc.ctex"]
 
 [params]
 

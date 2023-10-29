@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnjf1isvna20x"
-path="res://.godot/imported/explosion_pixelfied.png-b3df191378309f574043a652df3ea742.ctex"
+uid="uid://v6ucloex4asu"
+path="res://.godot/imported/juggernaut.png-4a47c44a7b9945723167d52599034100.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/enemy/explosion_pixelfied.png"
-dest_files=["res://.godot/imported/explosion_pixelfied.png-b3df191378309f574043a652df3ea742.ctex"]
+source_file="res://textures/enemies/juggernaut.png"
+dest_files=["res://.godot/imported/juggernaut.png-4a47c44a7b9945723167d52599034100.ctex"]
 
 [params]
 

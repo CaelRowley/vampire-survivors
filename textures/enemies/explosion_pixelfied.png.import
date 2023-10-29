@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eof5o8mqy7pk"
-path="res://.godot/imported/cyclops.png-52a14fd6e56a06b4f5faed7849c45fe3.ctex"
+uid="uid://dnjf1isvna20x"
+path="res://.godot/imported/explosion_pixelfied.png-164d602d9f20f3f8bb72a91dde002df6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/enemy/cyclops.png"
-dest_files=["res://.godot/imported/cyclops.png-52a14fd6e56a06b4f5faed7849c45fe3.ctex"]
+source_file="res://textures/enemies/explosion_pixelfied.png"
+dest_files=["res://.godot/imported/explosion_pixelfied.png-164d602d9f20f3f8bb72a91dde002df6.ctex"]
 
 [params]
 

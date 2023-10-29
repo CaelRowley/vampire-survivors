@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw0h43pb8dfl6"
-path="res://.godot/imported/kolbold_strong.png-5994f969199fb459949f671b8a45082b.ctex"
+uid="uid://cxhbmigac5v66"
+path="res://.godot/imported/dirt_full_new.png-e1b08e59a98e4801bc149611f8e0b39c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/enemy/kolbold_strong.png"
-dest_files=["res://.godot/imported/kolbold_strong.png-5994f969199fb459949f671b8a45082b.ctex"]
+source_file="res://textures/backgrounds/dirt_full_new.png"
+dest_files=["res://.godot/imported/dirt_full_new.png-e1b08e59a98e4801bc149611f8e0b39c.ctex"]
 
 [params]
 
