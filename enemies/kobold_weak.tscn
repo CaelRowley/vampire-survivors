@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bstglfsslv1x"]
+[gd_scene load_steps=7 format=3 uid="uid://bstglfsslv1x"]
 
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_3omo4"]
 [ext_resource type="Texture2D" uid="uid://gvebf6mil3xx" path="res://textures/enemies/kolbold_weak.png" id="1_74epm"]
@@ -7,15 +7,38 @@
 radius = 6.0
 height = 20.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tia54"]
+atlas = ExtResource("1_74epm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyxpp"]
+atlas = ExtResource("1_74epm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jf6w6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tia54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyxpp")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 2.0
+}]
+
 [node name="Enemy" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_3omo4")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_74epm")
-hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 position = Vector2(2, 5)
 shape = SubResource("CapsuleShape2D_jwsnc")
+
+[node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_jf6w6")
+animation = &"walk"
