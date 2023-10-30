@@ -3,8 +3,6 @@ extends Node2D
 var level := 1
 var health := 1
 var speed := 100
-var damage := 5
-var knockback := 100
 var attack_size := 1.0
 
 var target_pos := Vector2.ZERO
@@ -15,16 +13,14 @@ var angle := Vector2.ZERO
 
 
 func _ready():
-	hit_box.damage = damage
 	angle = global_position.direction_to(target_pos)
 	rotation = angle.angle() + deg_to_rad(135)
+	hit_box.angle = angle
 	
 	match level:
 		1: 
 			health = 1
 			speed = 100
-			damage = 5
-			knockback = 100
 			attack_size = 1.0
 
 	var tween := create_tween()

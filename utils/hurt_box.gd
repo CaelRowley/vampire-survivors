@@ -1,7 +1,7 @@
 class_name HurtBox
 extends Area2D
 
-signal hurt(damage: float)
+signal hurt(damage: float, angle: Vector2, knockback_strength: float)
 
 enum HurtBoxTypes {DisableHurtBox, DisableHitBox, HitOnce}
 
@@ -12,16 +12,17 @@ enum HurtBoxTypes {DisableHurtBox, DisableHitBox, HitOnce}
 
 func _on_area_entered(area: Area2D):
 	if area.is_in_group("hit_box"):
+		var hit_box := area as HitBox
 		match hurt_box_type:
 			HurtBoxTypes.DisableHurtBox:
 				collision_shape.call_deferred("set", "disabled", true)
 				disable_timer.start()
 			HurtBoxTypes.DisableHitBox:
-				area.disable_hit_box()
+				hit_box.disable_hit_box()
 			HurtBoxTypes.HitOnce:
 				pass
-		hurt.emit(area.damage)
-		area.hurt_box_hit(self)
+		hurt.emit(hit_box.damage, hit_box.angle, hit_box.knockback_strength)
+		hit_box.hurt_box_hit(self)
 
 
 func _on_disable_timer_timeout():

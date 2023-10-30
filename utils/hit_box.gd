@@ -3,7 +3,9 @@ extends Area2D
 
 signal hit(hurt_box: HurtBox)
 
-@export var damage := 1
+@export var damage := 1.0
+@export var knockback_strength := 100.0
+@export var angle := Vector2.ZERO
 
 @onready var collision_shape := $CollisionShape2D as CollisionShape2D
 @onready var disable_timer := $DisableTimer as Timer

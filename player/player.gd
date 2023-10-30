@@ -54,7 +54,7 @@ func get_random_target() -> Vector2:
 	return enemies_in_range.pick_random().global_position
 
 
-func _on_hurt_box_hurt(damage: float):
+func _on_hurt_box_hurt(damage: float, _angle: Vector2, _knockback_strength: float):
 	health -= damage
 	if health <= 0:
 		queue_free()
