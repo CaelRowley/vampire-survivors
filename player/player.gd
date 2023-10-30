@@ -28,4 +28,3 @@ func _physics_process(delta: float):
 
 func _on_hurt_box_hurt(damage: float):
 	health -= damage
-	print(health)
