@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed := 100.0
+@export var health := 100.0
 
 @onready var character_sprite: AnimatedSprite2D = %CharacterSprite
 
@@ -24,3 +25,7 @@ func _physics_process(delta: float):
 	velocity = movement_input.normalized() * speed
 	move_and_slide()
 
+
+func _on_hurt_box_hurt(damage: float):
+	health -= damage
+	print(health)

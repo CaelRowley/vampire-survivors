@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bo6us8533c0ra"]
+
+[ext_resource type="Script" path="res://utils/hit_box.gd" id="1_mkopx"]
+
+[node name="HitBox" type="Area2D" groups=["hit_box"]]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_mkopx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="DisableTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="DisableTimer" to="." method="_on_disable_timer_timeout"]
