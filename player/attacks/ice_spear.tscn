@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://by85ehrk36oif"]
+
+[ext_resource type="Texture2D" uid="uid://j3pbtqvqhfyu" path="res://textures/items/weapons/ice_spear.png" id="1_7xpe6"]
+[ext_resource type="Script" path="res://player/attacks/ice_spear.gd" id="1_dviel"]
+[ext_resource type="PackedScene" uid="uid://bo6us8533c0ra" path="res://utils/hit_box.tscn" id="3_4mvry"]
+[ext_resource type="AudioStream" uid="uid://cdbb3r6w5cj15" path="res://audio/sfx/ice.wav" id="3_vh2gl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rx00l"]
+radius = 3.53553
+height = 33.9411
+
+[node name="IceSpear" type="Node2D"]
+top_level = true
+scale = Vector2(0.1, 0.1)
+script = ExtResource("1_dviel")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7xpe6")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vh2gl")
+volume_db = -10.0
+pitch_scale = 4.0
+autoplay = true
+
+[node name="HitBox" parent="." instance=ExtResource("3_4mvry")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+rotation = -0.785398
+shape = SubResource("CapsuleShape2D_rx00l")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="hit" from="HitBox" to="." method="_on_hit_box_hit"]
+
+[editable path="HitBox"]

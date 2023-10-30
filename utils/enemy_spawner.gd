@@ -6,7 +6,7 @@ enum {UP, DOWN, LEFT, RIGHT}
 
 var time := 0
 
-@onready var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
+@onready var player: Player = get_tree().get_first_node_in_group("player")
 
 
 func _on_timer_timeout():
@@ -20,7 +20,7 @@ func _on_timer_timeout():
 				var new_enemy: Resource = spawn.enemy
 				var spawned_count := 0
 				while spawned_count < spawn.num_to_spawn:
-					var enemy_spawn: CharacterBody2D = new_enemy.instantiate()
+					var enemy_spawn: Enemy = new_enemy.instantiate()
 					enemy_spawn.global_position = get_random_postion()
 					add_child(enemy_spawn)
 					spawned_count += 1
