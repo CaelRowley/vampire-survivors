@@ -1,7 +1,8 @@
 class_name HitBox
 extends Area2D
 
-signal hit(hurt_box: HurtBox)
+signal hit(hit_box: HitBox, hurt_box: HurtBox)
+signal died(hit_box: HitBox)
 
 @export var damage := 1.0
 @export var knockback_strength := 100.0
@@ -17,7 +18,11 @@ func disable_hit_box():
 
 
 func hurt_box_hit(hurt_box: HurtBox):
-	hit.emit(hurt_box)
+	hit.emit(self, hurt_box)
+
+
+func die():
+	died.emit(self)
 
 
 func _on_disable_timer_timeout():

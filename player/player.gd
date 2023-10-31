@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 var ice_spear := preload("res://player/attacks/ice_spear.tscn")
 var ice_spear_ammo := 0
-var ice_spear_base_ammo := 5
+var ice_spear_base_ammo := 1
 var ice_spear_attack_speed := 1.5
 var ice_spear_level := 1
 
@@ -57,7 +57,7 @@ func get_random_target() -> Vector2:
 func _on_hurt_box_hurt(damage: float, _angle: Vector2, _knockback_strength: float):
 	health -= damage
 	if health <= 0:
-		queue_free()
+		print("dead")
 
 
 func _on_ice_spear_timer_timeout():

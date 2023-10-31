@@ -31,6 +31,8 @@ autoplay = true
 [node name="HitBox" parent="." instance=ExtResource("3_4mvry")]
 collision_layer = 4
 collision_mask = 4
+damage = 5.0
+knockback_strength = 200.0
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 rotation = -0.785398

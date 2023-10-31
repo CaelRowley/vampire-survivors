@@ -19,7 +19,7 @@ func _ready():
 	
 	match level:
 		1: 
-			health = 1
+			health = 2
 			speed = 100
 			attack_size = 1.0
 
@@ -32,11 +32,16 @@ func _physics_process(delta: float):
 	position += angle * speed * delta
 
 
-func _on_timer_timeout():
+func die():
+	hit_box.die()
 	queue_free()
 
 
-func _on_hit_box_hit(_hurt_box: HurtBox):
+func _on_timer_timeout():
+	die()
+
+
+func _on_hit_box_hit(_hit_box: HitBox, _hurt_box: HurtBox):
 	health -= 1
 	if health <= 0:
-		queue_free()
+		die()
