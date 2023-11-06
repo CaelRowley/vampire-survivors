@@ -2,13 +2,13 @@ extends Node2D
 
 var level := 1
 var health := 1
-var speed := 100
+var speed := 100.0
 var attack_size := 1.0
 
 var target_pos := Vector2.ZERO
 var angle := Vector2.ZERO
 
-@onready var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
+@onready var player := get_tree().get_first_node_in_group("player") as Player
 @onready var hit_box := $HitBox as HitBox
 
 
@@ -20,7 +20,7 @@ func _ready():
 	match level:
 		1: 
 			health = 2
-			speed = 100
+			speed = 100.0
 			attack_size = 1.0
 
 	var tween := create_tween()

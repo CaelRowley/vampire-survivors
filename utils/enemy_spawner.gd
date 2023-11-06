@@ -6,7 +6,7 @@ enum {UP, DOWN, LEFT, RIGHT}
 
 var time := 0
 
-@onready var player: Player = get_tree().get_first_node_in_group("player")
+@onready var player := get_tree().get_first_node_in_group("player") as Player
 
 
 func _on_timer_timeout():

@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var death_anim := preload("res://enemies/explosion.tscn")
 
 @onready var character_sprite: AnimatedSprite2D = %CharacterSprite
-@onready var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
+@onready var player := get_tree().get_first_node_in_group("player") as Player
 @onready var audio_hit = $AudioHit
 
 
