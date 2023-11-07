@@ -6,21 +6,17 @@ var speed := 100.0
 var attack_size := 1.0
 var attack_speed := 4.0
 
-var paths := 3
+var base_ammo := 3
+var ammo := base_ammo
 
-var target_pos := Vector2.ZERO
-var target_list := []
-
-var angle := Vector2.ZERO
-var reset_pos := Vector2.ZERO
+var target_dir := Vector2.ZERO
+var random_direction := Vector2((randf()*2) -1, (randf()*2) -1).normalized()
 
 @onready var player := get_tree().get_first_node_in_group("player") as Player
 @onready var hit_box := $HitBox as HitBox
 
-
 @onready var attack_timer := $AttackTimer as Timer
-@onready var change_direction_timer := $ChangeDirectionTimer as Timer
-@onready var reset_postimer := $ResetPostimer as Timer
+@onready var recharge_timer := $RechargeTimer as Timer
 
 @onready var sprite_new := $SpriteNew as Sprite2D
 @onready var sprite_attack := $SpriteAttack as Sprite2D
@@ -28,10 +24,11 @@ var reset_pos := Vector2.ZERO
 
 @onready var collision := $HitBox/CollisionShape2D as CollisionShape2D
 
+
 func _ready():
-	angle = global_position.direction_to(target_pos)
-	rotation = angle.angle() + deg_to_rad(135)
-	hit_box.angle = angle
+	var dir_to_player := global_position.direction_to(player.global_position)
+	rotation = dir_to_player.angle() + deg_to_rad(135)
+	hit_box.angle = dir_to_player
 	
 	match level:
 		1: 
@@ -43,94 +40,48 @@ func _ready():
 	tween.tween_property(self, "scale", Vector2.ONE*attack_size, 1.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	tween.play()
 	attack_timer.wait_time = attack_speed
-	
-	_on_reset_postimer_timeout()
 
 
 func _physics_process(delta: float):
-	if !target_list.is_empty():
-		position += angle * speed * delta
+	if target_dir:
+		position += target_dir * speed * delta
 	else:
-		var player_angle := global_position.direction_to(reset_pos)
-		var distance_dif := global_position - player.global_position
-		var return_speed := 200
-		if abs(distance_dif.x) > 500 or abs(distance_dif.y) > 500:
-			return_speed = 1000
-		position += player_angle * return_speed * delta
+		var reset_pos = player.global_position + (random_direction * 50.0)
+		var return_speed := maxf(global_position.distance_to(reset_pos), 20.0)
+		position += global_position.direction_to(reset_pos) * return_speed * delta
 		rotation = global_position.direction_to(player.global_position).angle() + deg_to_rad(135)
 
 
-func die():
-	hit_box.die()
-	queue_free()
-
-
-func _on_timer_timeout():
-	die()
-
-
-func _on_hit_box_hit(_hit_box: HitBox, _hurt_box: HurtBox):
-	health -= 1
-	if health <= 0:
-		die()
-
-
-func add_paths():
+func attack():
+	ammo -= 1
 	audio_stream_player.play()
-	target_list.clear()
-	var counter := 0
-	while counter < paths:
-		var new_path = player.get_random_target()
-		target_list.append(new_path)
-		counter += 1
-		enable_attack(true)
-	target_pos = target_list[0]
-	process_path()
-
-
-func process_path():
-	angle = global_position.direction_to(target_pos)
-	change_direction_timer.start()
+	target_dir = global_position.direction_to(player.get_random_target())
+	set_is_attacking(true)
+	recharge_timer.start()
 	var tween := create_tween()
-	var new_rot_deg := angle.angle() + deg_to_rad(135)
-	tween.tween_property(self, "rotation", new_rot_deg, 0.25).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	var target_rotation := target_dir.angle() + deg_to_rad(135)
+	tween.tween_property(self, "rotation", target_rotation, 0.25).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	tween.play()
 
 
-func _on_attack_timer_timeout():
-	add_paths()
-
-
-func enable_attack(is_enabled := true):
+func set_is_attacking(is_enabled := true):
 	sprite_new.visible = !is_enabled
 	sprite_attack.visible = is_enabled
 	collision.call_deferred("set", "disabled", !is_enabled)
 
 
-func _on_change_direction_timer_timeout():
-	if !target_list.is_empty():
-		target_list.remove_at(0)
-		if !target_list.is_empty():
-			target_pos = target_list[0]
-			process_path()
-			audio_stream_player.play()
-		else:
-			enable_attack(false)
+func _on_attack_timer_timeout():
+	ammo = base_ammo
+	attack_timer.stop()
+	attack()
+
+
+func _on_recharge_timer_timeout():
+	if ammo > 0:
+		attack()
 	else:
-		change_direction_timer.stop()
+		set_is_attacking(false)
+		random_direction = Vector2((randf()*2) -1, (randf()*2) -1).normalized()
+		target_dir = Vector2.ZERO
+		recharge_timer.stop()
 		attack_timer.start()
-		enable_attack(false)
-
-
-func _on_reset_postimer_timeout():
-	var choose_direction := randi() % 4 # 0, 1 ,2 ,3
-	reset_pos = player.global_position
-	match choose_direction:
-		0:
-			reset_pos.x += 50
-		1:
-			reset_pos.x -= 50
-		2:
-			reset_pos.y += 50
-		3:
-			reset_pos.y -= 50

@@ -8,13 +8,13 @@ var last_movement_dir := Vector2.UP
 
 var ice_spear := preload("res://player/attacks/ice_spear.tscn")
 var ice_spear_ammo := 0
-var ice_spear_base_ammo := 1
+var ice_spear_base_ammo := 0
 var ice_spear_attack_speed := 1.5
 var ice_spear_level := 1
 
 var tornado := preload("res://player/attacks/tornado.tscn")
 var tornado_ammo := 0
-var tornado_base_ammo := 1
+var tornado_base_ammo := 0
 var tornado_attack_speed := 1.5
 var tornado_level := 1
 
