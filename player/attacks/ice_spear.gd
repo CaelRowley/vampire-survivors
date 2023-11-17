@@ -18,11 +18,31 @@ func _ready():
 	hit_box.angle = angle
 	
 	match level:
-		1: 
+		1:
+			health = 1
+			speed = 100
+			hit_box.damage = 5
+			hit_box.knockback_strength = 100
+			attack_size = player.spell_size
+		2:
+			health = 1
+			speed = 100
+			hit_box.damage = 5
+			hit_box.knockback_strength = 100
+			attack_size = player.spell_size
+		3:
 			health = 2
-			speed = 100.0
-			attack_size = 1.0
-
+			speed = 100
+			hit_box.damage = 8
+			hit_box.knockback_strength = 100
+			attack_size = player.spell_size
+		4:
+			health = 2
+			speed = 100
+			hit_box.damage = 8
+			hit_box.knockback_strength = 100
+			attack_size = player.spell_size
+			
 	var tween := create_tween()
 	tween.tween_property(self, "scale", Vector2.ONE*attack_size, 1.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	tween.play()

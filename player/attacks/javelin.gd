@@ -6,7 +6,7 @@ var speed := 100.0
 var attack_size := 1.0
 var attack_speed := 4.0
 
-var base_ammo := 3
+var base_ammo := 1
 var ammo := base_ammo
 
 var target_dir := Vector2.ZERO
@@ -29,17 +29,6 @@ func _ready():
 	var dir_to_player := global_position.direction_to(player.global_position)
 	rotation = dir_to_player.angle() + deg_to_rad(135)
 	hit_box.angle = dir_to_player
-	
-	match level:
-		1: 
-			health = 9999
-			speed = 200.0
-			attack_size = 1.0
-
-	var tween := create_tween()
-	tween.tween_property(self, "scale", Vector2.ONE*attack_size, 1.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-	tween.play()
-	attack_timer.wait_time = attack_speed
 
 
 func _physics_process(delta: float):
@@ -50,6 +39,48 @@ func _physics_process(delta: float):
 		var return_speed := maxf(global_position.distance_to(reset_pos), 20.0)
 		position += global_position.direction_to(reset_pos) * return_speed * delta
 		rotation = global_position.direction_to(player.global_position).angle() + deg_to_rad(135)
+
+
+func update_javelin() -> void:
+	level = player.javelin_level
+	match level:
+		1:
+			health = 9999
+			speed = 200.0
+			hit_box.damage = 10
+			hit_box.knockback_strength = 100
+			base_ammo = 1
+			attack_size = 1.0 * player.spell_size
+			attack_speed = 5.0 * (1-player.spell_cooldown)
+		2:
+			health = 9999
+			speed = 200.0
+			hit_box.damage = 10
+			hit_box.knockback_strength = 100
+			base_ammo = 2
+			attack_size = 1.0 * player.spell_size
+			attack_speed = 5.0 * (1-player.spell_cooldown)
+		3:
+			health = 9999
+			speed = 200.0
+			hit_box.damage = 10
+			hit_box.knockback_strength = 100
+			base_ammo = 3
+			attack_size = 1.0 * player.spell_size
+			attack_speed = 5.0 * (1-player.spell_cooldown)
+		4:
+			health = 9999
+			speed = 200.0
+			hit_box.damage = 15
+			hit_box.knockback_strength = 120
+			base_ammo = 3
+			attack_size = 1.0 * player.spell_size
+			attack_speed = 5.0 * (1-player.spell_cooldown)
+	
+	attack_timer.wait_time = attack_speed
+	var tween := create_tween()
+	tween.tween_property(self, "scale", Vector2.ONE*attack_size, 1.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	tween.play()
 
 
 func attack():

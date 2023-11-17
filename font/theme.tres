@@ -3,4 +3,6 @@
 [ext_resource type="FontFile" uid="uid://p1pcvyluryad" path="res://font/tenderness.otf" id="1_i4kww"]
 
 [resource]
+default_base_scale = 100.0
 default_font = ExtResource("1_i4kww")
+default_font_size = 16
