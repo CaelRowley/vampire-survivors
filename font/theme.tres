@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://fvt1ff24aerm"]
+
+[ext_resource type="FontFile" uid="uid://p1pcvyluryad" path="res://font/tenderness.otf" id="1_i4kww"]
+
+[resource]
+default_font = ExtResource("1_i4kww")

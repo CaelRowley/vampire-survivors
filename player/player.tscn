@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bly5cneivyyvt"]
+[gd_scene load_steps=15 format=3 uid="uid://bly5cneivyyvt"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_8svq5"]
 [ext_resource type="Texture2D" uid="uid://birmuhjh7taoi" path="res://textures/player/player_sprite.png" id="1_k78b8"]
 [ext_resource type="PackedScene" uid="uid://ddr7gbitfrvil" path="res://utils/hurt_box.tscn" id="3_bw0fj"]
+[ext_resource type="Texture2D" uid="uid://boud6q4gs6bgp" path="res://textures/gui/exp_background.png" id="4_3lrff"]
+[ext_resource type="Texture2D" uid="uid://iuknxh6y3l0g" path="res://textures/gui/exp_progress.png" id="5_822im"]
+[ext_resource type="AudioStream" uid="uid://eaqadsr48761" path="res://audio/sfx/level_up.ogg" id="7_k1hqh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_516ll"]
 radius = 5.0
@@ -36,6 +39,12 @@ height = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7cp1"]
 radius = 368.067
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qmef3"]
+radius = 86.1452
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u4qb1"]
+radius = 18.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
@@ -76,12 +85,85 @@ wait_time = 0.075
 [node name="Javelins" type="Node2D" parent="Attack"]
 
 [node name="EnemyDetection" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 4
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetection"]
 shape = SubResource("CircleShape2D_m7cp1")
+
+[node name="GrabArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_qmef3")
+
+[node name="CollectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
+shape = SubResource("CircleShape2D_u4qb1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ExpBar" type="TextureProgressBar" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("4_3lrff")
+texture_progress = ExtResource("5_822im")
+
+[node name="LabelLevel" type="Label" parent="CanvasLayer/Control/ExpBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 540.0
+offset_right = 640.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 16
+text = "Level: 1"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="PanelLevelUp" type="Panel" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+process_mode = 2
+layout_mode = 0
+offset_left = 220.0
+offset_top = 360.0
+offset_right = 420.0
+offset_bottom = 610.0
+
+[node name="LabelLevelUp" type="Label" parent="CanvasLayer/Control/PanelLevelUp"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "Level Up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptions" type="VBoxContainer" parent="CanvasLayer/Control/PanelLevelUp"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 190.0
+offset_bottom = 100.0
+
+[node name="AudioLevelUp" type="AudioStreamPlayer" parent="CanvasLayer/Control/PanelLevelUp"]
+unique_name_in_owner = true
+stream = ExtResource("7_k1hqh")
+volume_db = -10.0
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
@@ -90,5 +172,7 @@ shape = SubResource("CircleShape2D_m7cp1")
 [connection signal="timeout" from="Attack/TornadoTimer/AttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
 [connection signal="body_entered" from="EnemyDetection" to="." method="_on_enemy_detection_body_entered"]
 [connection signal="body_exited" from="EnemyDetection" to="." method="_on_enemy_detection_body_exited"]
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 
 [editable path="HurtBox"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://tiwkth0f8ia7"]
+[gd_scene load_steps=9 format=3 uid="uid://tiwkth0f8ia7"]
 
 [ext_resource type="Texture2D" uid="uid://cxhbmigac5v66" path="res://textures/backgrounds/dirt_full_new.png" id="1_ihkmx"]
 [ext_resource type="PackedScene" uid="uid://bly5cneivyyvt" path="res://player/player.tscn" id="2_6wnqu"]
 [ext_resource type="PackedScene" uid="uid://bstglfsslv1x" path="res://enemies/kobold_weak.tscn" id="3_nsf0n"]
 [ext_resource type="PackedScene" uid="uid://cqailju80xoyv" path="res://utils/enemy_spawner.tscn" id="4_l8d8r"]
 [ext_resource type="Script" path="res://utils/spawn_info.gd" id="5_hgine"]
+[ext_resource type="PackedScene" uid="uid://b8c8rx6pay2ob" path="res://loot/exp_gem.tscn" id="6_ej7ad"]
 
 [sub_resource type="Resource" id="Resource_1s8gn"]
 script = ExtResource("5_hgine")
@@ -37,5 +38,15 @@ position = Vector2(14, -52)
 [node name="EnemySpawner" parent="." instance=ExtResource("4_l8d8r")]
 spawns = Array[ExtResource("5_hgine")]([SubResource("Resource_1s8gn"), SubResource("Resource_dg005")])
 
-[node name="Enemy" parent="." instance=ExtResource("3_nsf0n")]
-position = Vector2(243, -50)
+[node name="ExpGem" parent="." instance=ExtResource("6_ej7ad")]
+position = Vector2(92, -77)
+
+[node name="ExpGem2" parent="." instance=ExtResource("6_ej7ad")]
+position = Vector2(129, -18)
+exp = 10
+
+[node name="ExpGem3" parent="." instance=ExtResource("6_ej7ad")]
+position = Vector2(100, 29)
+exp = 25
+
+[node name="Loot" type="Node2D" parent="."]

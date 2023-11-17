@@ -9,7 +9,7 @@ var time := 0
 @onready var player := get_tree().get_first_node_in_group("player") as Player
 
 
-func _on_timer_timeout():
+func _on_timer_timeout() -> void:
 	time += 1
 	for spawn in spawns:
 		if time >= spawn.time_start and (spawn.time_end == 0 or time <= spawn.time_end):
