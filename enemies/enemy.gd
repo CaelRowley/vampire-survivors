@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @export var speed := 20.0
 @export var health := 10.0
-@export var exp := 1.0
+@export var experience := 1
 @export var knockback := Vector2.ZERO
 @export var knockback_recovery := 3.5
 @export var death_anim := preload("res://enemies/explosion.tscn")
@@ -39,7 +39,7 @@ func die() -> void:
 	var new_gem := exp_gem.instantiate() as ExpGem
 	loot_node.call_deferred("add_child", new_gem)
 	new_gem.global_position = global_position
-	new_gem.exp = exp
+	new_gem.experience = experience
 	queue_free()
 
 

@@ -43,10 +43,10 @@ position = Vector2(92, -77)
 
 [node name="ExpGem2" parent="." instance=ExtResource("6_ej7ad")]
 position = Vector2(129, -18)
-exp = 10
+experience = 5
 
 [node name="ExpGem3" parent="." instance=ExtResource("6_ej7ad")]
 position = Vector2(100, 29)
-exp = 100
+experience = 25
 
 [node name="Loot" type="Node2D" parent="."]

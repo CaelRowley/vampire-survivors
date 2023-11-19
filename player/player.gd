@@ -11,12 +11,11 @@ extends CharacterBody2D
 @export var spell_cooldown := 0.0
 @export var additional_attacks := 0
 
-			
 var last_movement_dir := Vector2.UP
 
-var exp := 0
-var exp_level := 1
-var exp_required := 5
+var experience := 0
+var experience_level := 1
+var experience_required := 5
 
 var ice_spear := preload("res://player/attacks/ice_spear.tscn")
 var ice_spear_ammo := 0
@@ -58,7 +57,7 @@ var upgrade_options := []
 func _ready() -> void:
 	upgrade_character("Javelin1")
 	set_weapons()
-	set_exp_bar(exp, exp_required)
+	set_exp_bar(experience, experience_required)
 	
 
 
@@ -100,9 +99,9 @@ func set_weapons() -> void:
 			javelins.add_child(new_javelin)
 			new_javelin.global_position = global_position
 			spawn_count -= 1
-		for javelin in javelins.get_children():
-			if javelin.has_method("update_javelin"):
-				javelin.update_javelin()
+		for child in javelins.get_children():
+			if child.has_method("update_javelin"):
+				child.update_javelin()
 
 
 func get_random_target() -> Vector2:
@@ -111,11 +110,11 @@ func get_random_target() -> Vector2:
 	return enemies_in_range.pick_random().global_position
 
 
-func calculate_exp(new_exp: int) -> void:
-	exp += new_exp
-	if exp >= exp_required:
+func calculate_exp(new_experience: int) -> void:
+	experience += new_experience
+	if experience >= experience_required:
 		level_up()
-	set_exp_bar(exp, exp_required)
+	set_exp_bar(experience, experience_required)
 
 
 func set_exp_bar(new_value: int, new_max_value: int) -> void:
@@ -125,10 +124,10 @@ func set_exp_bar(new_value: int, new_max_value: int) -> void:
 
 func level_up() -> void:
 	audio_level_up.play()
-	exp = exp - exp_required
-	exp_level += 1
-	exp_required *= 2
-	label_level.text = str("Level: ", exp_level)
+	experience = experience - experience_required
+	experience_level += 1
+	experience_required *= 2
+	label_level.text = str("Level: ", experience_level)
 	
 	var tween := panel_level_up.create_tween()
 	tween.tween_property(panel_level_up, "position", Vector2(220, 50), 0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
