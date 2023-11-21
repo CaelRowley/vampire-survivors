@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+const ItemContainer := preload("res://player/gui/item_container.tscn")
+
 @export var speed := 100.0
 @export var health := 100.0
 @export var max_health := 100.0
@@ -10,6 +12,7 @@ extends CharacterBody2D
 @export var spell_size := 1.0
 @export var spell_cooldown := 0.0
 @export var additional_attacks := 0
+
 
 var last_movement_dir := Vector2.UP
 
@@ -36,7 +39,7 @@ var javelin_level := 0
 var enemies_in_range: Array[Enemy] = []
 var collected_upgrades := []
 var upgrade_options := []
-
+var time := 0
 
 @onready var ice_spear_timer: Timer = $Attack/IceSpearTimer
 @onready var ice_spear_attack_timer: Timer = ice_spear_timer.get_node("AttackTimer")
@@ -52,12 +55,18 @@ var upgrade_options := []
 @onready var audio_level_up := %AudioLevelUp as AudioStreamPlayer
 @onready var vbox_upgrade_options := %UpgradeOptions as VBoxContainer
 @onready var item_option := preload("res://utils/item_option.tscn")
+@onready var health_bar = %HealthBar
+@onready var label_timer = %LabelTimer
+@onready var collected_weapons_grid = %CollectedWeapons
+@onready var collected_upgrades_grid = %CollectedUpgrades
 
 
 func _ready() -> void:
 	upgrade_character("Javelin1")
 	set_weapons()
 	set_exp_bar(experience, experience_required)
+	health_bar.max_value = max_health
+	health_bar.value = health
 	
 
 
@@ -192,6 +201,7 @@ func upgrade_character(upgrade: String) -> void:
 		"Food":
 			health += 20
 			health = clamp(health,0,max_health)
+	update_upgrade_grid(upgrade)
 			
 	for child in vbox_upgrade_options.get_children():
 		child.queue_free()
@@ -230,8 +240,26 @@ func get_rand_item() -> String:
 		return "Food"
 
 
+func update_upgrade_grid(upgrade_name: String) -> void:
+	var upgrade = UpgradeDb.UPGRADES[upgrade_name]
+#	var name = upgrade.DisplayName
+	if upgrade.Type != "Item":
+		var upgrade_display_names = []
+		for collected_upgrade in collected_upgrades:
+			upgrade_display_names.push_back(UpgradeDb.UPGRADES[collected_upgrade].DisplayName)
+		if not upgrade.DisplayName in upgrade_display_names:
+			var new_item := ItemContainer.instantiate()
+			new_item.upgrade = upgrade_name
+			match upgrade.Type:
+				"Weapon":
+					collected_weapons_grid.add_child(new_item)
+				"Upgrade":
+					collected_upgrades_grid.add_child(new_item)
+
+
 func _on_hurt_box_hurt(damage: float, _angle: Vector2, _knockback_strength: float) -> void:
 	health -= maxf(damage-armor, 1.0)
+	health_bar.value = health
 	if health <= 0:
 		print("dead")
 
@@ -292,3 +320,9 @@ func _on_grab_area_area_entered(area: ExpGem) -> void:
 func _on_collect_area_area_entered(area: ExpGem) -> void:
 	calculate_exp(area.collect())
 	
+
+func _on_second_timer_timeout():
+	time += 1
+	var minutes := int(time/60)
+	var seconds := time % 60
+	label_timer.text = str("%02d" % minutes, ":", "%02d" % seconds)

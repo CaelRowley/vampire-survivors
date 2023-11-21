@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://df6ph66uygxfu"]
+
+[ext_resource type="Texture2D" uid="uid://b2lehkg70kk2e" path="res://textures/gui/empty_item.png" id="1_x8c3h"]
+[ext_resource type="Texture2D" uid="uid://j3pbtqvqhfyu" path="res://textures/items/weapons/ice_spear.png" id="2_5fygm"]
+[ext_resource type="Script" path="res://player/gui/item_container.gd" id="2_7rlc2"]
+
+[node name="ItemContainer" type="TextureRect"]
+offset_right = 12.0
+offset_bottom = 12.0
+texture = ExtResource("1_x8c3h")
+script = ExtResource("2_7rlc2")
+
+[node name="ItemTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 36.0
+offset_bottom = 36.0
+scale = Vector2(0.33, 0.33)
+texture = ExtResource("2_5fygm")

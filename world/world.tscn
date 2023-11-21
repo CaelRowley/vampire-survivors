@@ -47,6 +47,6 @@ experience = 5
 
 [node name="ExpGem3" parent="." instance=ExtResource("6_ej7ad")]
 position = Vector2(100, 29)
-experience = 25
+experience = 500
 
 [node name="Loot" type="Node2D" parent="."]
