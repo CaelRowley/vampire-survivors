@@ -1,31 +1,31 @@
-[gd_scene load_steps=12 format=3 uid="uid://bstglfsslv1x"]
+[gd_scene load_steps=12 format=3 uid="uid://cfix42pq6k83e"]
 
-[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_3omo4"]
-[ext_resource type="Texture2D" uid="uid://gvebf6mil3xx" path="res://textures/enemies/kolbold_weak.png" id="1_74epm"]
-[ext_resource type="PackedScene" uid="uid://ddr7gbitfrvil" path="res://utils/hurt_box.tscn" id="3_m48mw"]
-[ext_resource type="PackedScene" uid="uid://bo6us8533c0ra" path="res://utils/hit_box.tscn" id="4_228gh"]
-[ext_resource type="AudioStream" uid="uid://dtlqmr1vslg8u" path="res://audio/sfx/enemy_hit.ogg" id="5_yeafq"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_fxoie"]
+[ext_resource type="Texture2D" uid="uid://cw0h43pb8dfl6" path="res://textures/enemies/kolbold_strong.png" id="2_yo6sw"]
+[ext_resource type="PackedScene" uid="uid://ddr7gbitfrvil" path="res://utils/hurt_box.tscn" id="3_s8wys"]
+[ext_resource type="PackedScene" uid="uid://bo6us8533c0ra" path="res://utils/hit_box.tscn" id="4_7hskt"]
+[ext_resource type="AudioStream" uid="uid://dtlqmr1vslg8u" path="res://audio/sfx/enemy_hit.ogg" id="5_remul"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jwsnc"]
 radius = 6.0
 height = 20.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tia54"]
-atlas = ExtResource("1_74epm")
+[sub_resource type="AtlasTexture" id="AtlasTexture_twjqu"]
+atlas = ExtResource("2_yo6sw")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oyxpp"]
-atlas = ExtResource("1_74epm")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jib4"]
+atlas = ExtResource("2_yo6sw")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jf6w6"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tia54")
+"texture": SubResource("AtlasTexture_twjqu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oyxpp")
+"texture": SubResource("AtlasTexture_8jib4")
 }],
 "loop": true,
 "name": &"walk",
@@ -39,11 +39,12 @@ radius = 7.0
 height = 24.0
 
 [node name="Enemy" type="CharacterBody2D"]
-scale = Vector2(0.75, 0.75)
 collision_layer = 4
 collision_mask = 4
 motion_mode = 1
-script = ExtResource("1_3omo4")
+script = ExtResource("1_fxoie")
+speed = 28.0
+health = 20.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
@@ -54,22 +55,23 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_jf6w6")
 animation = &"walk"
 
-[node name="HurtBox" parent="." instance=ExtResource("3_m48mw")]
+[node name="HurtBox" parent="." instance=ExtResource("3_s8wys")]
 collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 shape = SubResource("CapsuleShape2D_a0pqq")
 
-[node name="HitBox" parent="." instance=ExtResource("4_228gh")]
+[node name="HitBox" parent="." instance=ExtResource("4_7hskt")]
 collision_layer = 2
 collision_mask = 2
+damage = 2.0
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource("CapsuleShape2D_ik4ot")
 
 [node name="AudioHit" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_yeafq")
+stream = ExtResource("5_remul")
 volume_db = -20.0
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
