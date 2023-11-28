@@ -1,24 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhjpytumx4hpo"]
+[gd_scene load_steps=6 format=3 uid="uid://cmtgx7vkijep"]
 
-[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_ofxn6"]
-[ext_resource type="Texture2D" uid="uid://eof5o8mqy7pk" path="res://textures/enemies/cyclops.png" id="2_gnh1n"]
-[ext_resource type="PackedScene" uid="uid://ddr7gbitfrvil" path="res://utils/hurt_box.tscn" id="3_nr6o2"]
-[ext_resource type="PackedScene" uid="uid://bo6us8533c0ra" path="res://utils/hit_box.tscn" id="4_kxub5"]
-[ext_resource type="AudioStream" uid="uid://dtlqmr1vslg8u" path="res://audio/sfx/enemy_hit.ogg" id="5_36qml"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jwsnc"]
-radius = 6.0
-height = 20.0
+[ext_resource type="PackedScene" uid="uid://b7myeccr8o0wl" path="res://enemies/enemy.tscn" id="1_upyou"]
+[ext_resource type="Texture2D" uid="uid://eof5o8mqy7pk" path="res://textures/enemies/cyclops.png" id="2_kimto"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4r4m3"]
-atlas = ExtResource("2_gnh1n")
+atlas = ExtResource("2_kimto")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drx1o"]
-atlas = ExtResource("2_gnh1n")
+atlas = ExtResource("2_kimto")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_jf6w6"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_1mha5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -32,51 +25,15 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a0pqq"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ik4ot"]
-radius = 7.0
-height = 24.0
-
-[node name="Enemy" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 4
-motion_mode = 1
-script = ExtResource("1_ofxn6")
+[node name="Enemy" instance=ExtResource("1_upyou")]
 speed = 16.0
 health = 100.0
+damage = 5.0
 experience = 5
 knockback_recovery = 10.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-y_sort_enabled = true
-shape = SubResource("CapsuleShape2D_jwsnc")
-
-[node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
-unique_name_in_owner = true
-sprite_frames = SubResource("SpriteFrames_jf6w6")
-animation = &"walk"
-
-[node name="HurtBox" parent="." instance=ExtResource("3_nr6o2")]
-collision_layer = 4
-collision_mask = 4
-
-[node name="CollisionShape2D" parent="HurtBox" index="0"]
-shape = SubResource("CapsuleShape2D_a0pqq")
-
-[node name="HitBox" parent="." instance=ExtResource("4_kxub5")]
-collision_layer = 2
-collision_mask = 2
-damage = 5.0
-
-[node name="CollisionShape2D" parent="HitBox" index="0"]
-shape = SubResource("CapsuleShape2D_ik4ot")
-
-[node name="AudioHit" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_36qml")
-volume_db = -20.0
-
-[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[node name="CharacterSprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_1mha5")
 
 [editable path="HurtBox"]
 [editable path="HitBox"]

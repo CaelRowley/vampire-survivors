@@ -3,14 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://cxhbmigac5v66" path="res://textures/backgrounds/dirt_full_new.png" id="1_ihkmx"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_y0vpp"]
 [ext_resource type="PackedScene" uid="uid://bly5cneivyyvt" path="res://player/player.tscn" id="2_6wnqu"]
-[ext_resource type="PackedScene" uid="uid://bstglfsslv1x" path="res://enemies/kobold_weak.tscn" id="3_nsf0n"]
+[ext_resource type="PackedScene" uid="uid://d1mhvgwfw3yxy" path="res://enemies/kobold_weak.tscn" id="3_nsf0n"]
 [ext_resource type="PackedScene" uid="uid://cqailju80xoyv" path="res://utils/enemy_spawner.tscn" id="4_l8d8r"]
 [ext_resource type="Script" path="res://utils/spawn_info.gd" id="5_hgine"]
 [ext_resource type="PackedScene" uid="uid://b8c8rx6pay2ob" path="res://loot/exp_gem.tscn" id="6_ej7ad"]
-[ext_resource type="PackedScene" uid="uid://cfix42pq6k83e" path="res://enemies/kobold_strong.tscn" id="6_rf37l"]
-[ext_resource type="PackedScene" uid="uid://dhjpytumx4hpo" path="res://enemies/cyclops.tscn" id="7_x2po0"]
-[ext_resource type="PackedScene" uid="uid://cqyt45ovv2hgu" path="res://enemies/juggernaut.tscn" id="8_hyqye"]
-[ext_resource type="PackedScene" uid="uid://woceb4t2rh35" path="res://enemies/super.tscn" id="9_e13hy"]
+[ext_resource type="PackedScene" uid="uid://bfrpoh06vemap" path="res://enemies/kobold_strong.tscn" id="6_rf37l"]
+[ext_resource type="PackedScene" uid="uid://cmtgx7vkijep" path="res://enemies/cyclops.tscn" id="7_x2po0"]
+[ext_resource type="PackedScene" uid="uid://dncf4dgj5o31g" path="res://enemies/juggernaut.tscn" id="8_hyqye"]
+[ext_resource type="PackedScene" uid="uid://peu4r0h5lkao" path="res://enemies/super.tscn" id="9_e13hy"]
 [ext_resource type="AudioStream" uid="uid://fat0v0bkok0k" path="res://audio/music/battle_theme_a.mp3" id="11_4661j"]
 
 [sub_resource type="Resource" id="Resource_1s8gn"]
@@ -90,6 +90,7 @@ show_behind_parent = true
 script = ExtResource("1_y0vpp")
 
 [node name="Background" type="Sprite2D" parent="."]
+process_mode = 3
 texture_repeat = 2
 texture = ExtResource("1_ihkmx")
 region_enabled = true

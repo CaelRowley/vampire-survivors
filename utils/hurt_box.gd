@@ -5,11 +5,17 @@ signal hurt(damage: float, angle: Vector2, knockback_strength: float)
 
 enum HurtBoxTypes {DisableHurtBox, DisableHitBox, HitOnce}
 
+@export var hurt_box_type := HurtBoxTypes.DisableHurtBox
+
 var hit_once_array := []
 
-@export var hurt_box_type := HurtBoxTypes.DisableHurtBox
 @onready var collision_shape := $CollisionShape2D as CollisionShape2D
 @onready var disable_timer := $DisableTimer as Timer
+
+
+func _on_hit_box_died(hit_box: HitBox):
+	if hit_once_array.has(hit_box):
+		hit_once_array.erase(hit_box)
 
 
 func _on_area_entered(area: Area2D):
@@ -30,11 +36,6 @@ func _on_area_entered(area: Area2D):
 					return
 		hurt.emit(hit_box.damage, hit_box.angle, hit_box.knockback_strength)
 		hit_box.hurt_box_hit(self)
-
-
-func _on_hit_box_died(hit_box: HitBox):
-	if hit_once_array.has(hit_box):
-		hit_once_array.erase(hit_box)
 
 
 func _on_disable_timer_timeout():

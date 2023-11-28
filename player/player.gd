@@ -15,7 +15,6 @@ const ItemContainer := preload("res://player/gui/item_container.tscn")
 @export var spell_cooldown := 0.0
 @export var additional_attacks := 0
 
-
 var last_movement_dir := Vector2.UP
 
 var experience := 0
@@ -274,7 +273,6 @@ func die() -> void:
 	var tween := panel_death.create_tween()
 	tween.tween_property(panel_death, "position", Vector2(220, 50), 2.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	tween.play()
-	print(time)
 	if time >= 300:
 		label_result.text = "You Win!"
 		audio_win.play()

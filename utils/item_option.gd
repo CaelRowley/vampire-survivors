@@ -13,19 +13,10 @@ var item := "Food"
 
 func _ready():
 	upgrade_selected.connect(Callable(player, "upgrade_character"))
-	
 	label_name.text = UpgradeDb.UPGRADES[item]["DisplayName"]
 	label_description.text = UpgradeDb.UPGRADES[item]["Details"]
 	label_level.text = UpgradeDb.UPGRADES[item]["Level"]
 	icon.texture = load(UpgradeDb.UPGRADES[item]["Icon"])
-
-
-func _on_mouse_entered():
-	print("_on_mouse_entered")
-
-
-func _on_mouse_exited():
-	print("_on_mouse_exited")
 
 
 func _on_gui_input(event):
