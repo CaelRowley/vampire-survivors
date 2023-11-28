@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bly5cneivyyvt"]
+[gd_scene load_steps=20 format=3 uid="uid://bly5cneivyyvt"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_8svq5"]
 [ext_resource type="Texture2D" uid="uid://birmuhjh7taoi" path="res://textures/player/player_sprite.png" id="1_k78b8"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://cf2g7y31wcesa" path="res://textures/gui/healthbar.png" id="7_34bfm"]
 [ext_resource type="AudioStream" uid="uid://eaqadsr48761" path="res://audio/sfx/level_up.ogg" id="7_k1hqh"]
 [ext_resource type="Texture2D" uid="uid://cd6sl5jujkn2m" path="res://textures/gui/health.png" id="8_dvho4"]
+[ext_resource type="AudioStream" uid="uid://kloqp7dr4hlp" path="res://audio/sfx/victory.wav" id="9_efhfk"]
+[ext_resource type="AudioStream" uid="uid://y8j62r5nacjd" path="res://audio/sfx/lose.ogg" id="10_j60ht"]
+[ext_resource type="PackedScene" uid="uid://pjvb3gh2e3so" path="res://utils/button.tscn" id="11_dsgmf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_516ll"]
 radius = 5.0
@@ -178,6 +181,43 @@ offset_bottom = 100.0
 unique_name_in_owner = true
 stream = ExtResource("7_k1hqh")
 volume_db = -10.0
+
+[node name="PanelDeath" type="Panel" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+process_mode = 2
+layout_mode = 0
+offset_left = 220.0
+offset_top = 361.0
+offset_right = 420.0
+offset_bottom = 611.0
+
+[node name="LabelResult" type="Label" parent="CanvasLayer/Control/PanelDeath"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "You Dead!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioWin" type="AudioStreamPlayer" parent="CanvasLayer/Control/PanelDeath"]
+unique_name_in_owner = true
+stream = ExtResource("9_efhfk")
+volume_db = -10.0
+
+[node name="AudioLose" type="AudioStreamPlayer" parent="CanvasLayer/Control/PanelDeath"]
+unique_name_in_owner = true
+stream = ExtResource("10_j60ht")
+volume_db = -10.0
+
+[node name="BtnMenu" parent="CanvasLayer/Control/PanelDeath" instance=ExtResource("11_dsgmf")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 60.0
+offset_top = 200.0
+offset_right = 140.0
+offset_bottom = 230.0
+text = "Menu"
 
 [node name="LabelTimer" type="Label" parent="CanvasLayer/Control"]
 unique_name_in_owner = true

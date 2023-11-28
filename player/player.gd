@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal player_died()
+
 const ItemContainer := preload("res://player/gui/item_container.tscn")
 
 @export var speed := 100.0
@@ -60,6 +62,12 @@ var time := 0
 @onready var collected_weapons_grid = %CollectedWeapons
 @onready var collected_upgrades_grid = %CollectedUpgrades
 
+@onready var panel_death := %PanelDeath as Panel
+@onready var audio_win := %AudioWin as AudioStreamPlayer
+@onready var audio_lose := %AudioLose as AudioStreamPlayer
+@onready var btn_menu := %BtnMenu as CustomButton
+@onready var label_result := %LabelResult as Label
+
 
 func _ready() -> void:
 	upgrade_character("Javelin1")
@@ -68,6 +76,9 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = health
 	
+	btn_menu.handle_press = func handle_press() -> void:
+		get_tree().paused = false
+		get_tree().change_scene_to_file("res://menus/main_menu.tscn")
 
 
 func _physics_process(_delta: float) -> void:
@@ -138,10 +149,10 @@ func level_up() -> void:
 	experience_required *= 2
 	label_level.text = str("Level: ", experience_level)
 	
+	panel_level_up.visible = true
 	var tween := panel_level_up.create_tween()
 	tween.tween_property(panel_level_up, "position", Vector2(220, 50), 0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
 	tween.play()
-	panel_level_up.visible = true
 	
 	var options := 0
 	var options_max := 3
@@ -257,11 +268,27 @@ func update_upgrade_grid(upgrade_name: String) -> void:
 					collected_upgrades_grid.add_child(new_item)
 
 
+func die() -> void:
+	get_tree().paused = true
+	panel_death.visible = true
+	var tween := panel_death.create_tween()
+	tween.tween_property(panel_death, "position", Vector2(220, 50), 2.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	tween.play()
+	print(time)
+	if time >= 300:
+		label_result.text = "You Win!"
+		audio_win.play()
+	else:
+		label_result.text = "You Lose!"
+		audio_lose.play()
+	player_died.emit()
+
+
 func _on_hurt_box_hurt(damage: float, _angle: Vector2, _knockback_strength: float) -> void:
 	health -= maxf(damage-armor, 1.0)
 	health_bar.value = health
 	if health <= 0:
-		print("dead")
+		die()
 
 
 func _on_enemy_detection_body_entered(body: Enemy) -> void:
