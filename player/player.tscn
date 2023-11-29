@@ -85,6 +85,7 @@ wait_time = 0.075
 [node name="TornadoTimer" type="Timer" parent="Attack"]
 
 [node name="AttackTimer" type="Timer" parent="Attack/TornadoTimer"]
+wait_time = 0.5
 
 [node name="Javelins" type="Node2D" parent="Attack"]
 
