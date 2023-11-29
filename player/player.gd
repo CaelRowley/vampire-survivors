@@ -84,7 +84,7 @@ func _physics_process(_delta: float) -> void:
 	var x_input := Input.get_action_strength("right") - Input.get_action_strength("left")
 	var y_input := Input.get_action_strength("down") - Input.get_action_strength("up")
 	var movement_dir := Vector2(x_input, y_input)
-	
+
 	if movement_dir != Vector2.ZERO:
 		last_movement_dir = movement_dir
 		if !character_sprite.is_playing():
@@ -203,7 +203,7 @@ func upgrade_character(upgrade: String) -> void:
 		"Speed1","Speed2","Speed3","Speed4":
 			bonus_speed += 20.0
 		"Tome1","Tome2","Tome3","Tome4":
-			spell_size += 1.10
+			spell_size += 0.10
 		"Scroll1","Scroll2","Scroll3","Scroll4":
 			spell_cooldown += 0.05
 		"Ring1","Ring2":
