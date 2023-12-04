@@ -6,7 +6,7 @@ enum {UP, DOWN, LEFT, RIGHT}
 
 var time := 0
 
-@onready var player := get_tree().get_first_node_in_group("player") as Player
+@onready var player: Player
 
 
 func _on_timer_timeout() -> void:
@@ -27,6 +27,9 @@ func _on_timer_timeout() -> void:
 
 
 func get_random_postion() -> Vector2:
+	if !is_instance_valid(player):
+#		player = GameSession.players[0]
+		return Vector2.ZERO
 	var viewport := get_viewport_rect().size * randf_range(1.1, 1.4)
 	var top_left := Vector2(player.global_position.x - viewport.x/2, player.global_position.y - viewport.y/2)
 	var top_right := Vector2(player.global_position.x + viewport.x/2, player.global_position.y - viewport.y/2)

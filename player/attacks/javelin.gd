@@ -12,7 +12,7 @@ var ammo := base_ammo
 var target_dir := Vector2.ZERO
 var random_direction := Vector2((randf()*2) -1, (randf()*2) -1).normalized()
 
-@onready var player := get_tree().get_first_node_in_group("player") as Player
+@onready var player: Player # := get_tree().get_first_node_in_group("player") as Player
 @onready var hit_box := $HitBox as HitBox
 
 @onready var attack_timer := $AttackTimer as Timer
@@ -26,6 +26,11 @@ var random_direction := Vector2((randf()*2) -1, (randf()*2) -1).normalized()
 
 
 func _ready():
+	for players in GameSession.players:
+		if players.is_multiplayer_authority():
+			player = players
+	if !is_instance_valid(player):
+		player = get_tree().get_first_node_in_group("player") as Player
 	var dir_to_player := global_position.direction_to(player.global_position)
 	rotation = dir_to_player.angle() + deg_to_rad(135)
 	hit_box.angle = dir_to_player

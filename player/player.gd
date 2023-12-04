@@ -68,7 +68,13 @@ var time := 0
 @onready var label_result := %LabelResult as Label
 
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+
+
 func _ready() -> void:
+	GameSession.players.push_back(self)
+	GameSession.current_player = self
 	upgrade_character("Javelin1")
 	set_weapons()
 	set_exp_bar(experience, experience_required)
@@ -78,26 +84,30 @@ func _ready() -> void:
 	btn_menu.handle_press = func handle_press() -> void:
 		get_tree().paused = false
 		get_tree().change_scene_to_file("res://menus/main_menu.tscn")
+	
+	if is_multiplayer_authority():
+		$Camera2D.make_current()
 
 
 func _physics_process(_delta: float) -> void:
-	var x_input := Input.get_action_strength("right") - Input.get_action_strength("left")
-	var y_input := Input.get_action_strength("down") - Input.get_action_strength("up")
-	var movement_dir := Vector2(x_input, y_input)
+	if is_multiplayer_authority():
+		var x_input := Input.get_action_strength("right") - Input.get_action_strength("left")
+		var y_input := Input.get_action_strength("down") - Input.get_action_strength("up")
+		var movement_dir := Vector2(x_input, y_input)
 
-	if movement_dir != Vector2.ZERO:
-		last_movement_dir = movement_dir
-		if !character_sprite.is_playing():
-			character_sprite.set_frame(1)
-			character_sprite.play()
-	else:
-		if character_sprite.is_playing():
-			character_sprite.stop()
-	
-	if character_sprite.is_playing():
-		character_sprite.flip_h = movement_dir.x > 0
+		if movement_dir != Vector2.ZERO:
+			last_movement_dir = movement_dir
+			if !character_sprite.is_playing():
+				character_sprite.set_frame(1)
+				character_sprite.play()
+		else:
+			if character_sprite.is_playing():
+				character_sprite.stop()
 		
-	velocity = movement_dir.normalized() * (speed + bonus_speed)
+		if character_sprite.is_playing():
+			character_sprite.flip_h = movement_dir.x > 0
+			
+		velocity = movement_dir.normalized() * (speed + bonus_speed)
 	move_and_slide()
 
 

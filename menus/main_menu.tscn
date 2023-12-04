@@ -30,16 +30,32 @@ vertical_alignment = 1
 
 [node name="BtnPlay" parent="." instance=ExtResource("2_ribct")]
 layout_mode = 0
-offset_left = 280.0
+offset_left = 180.0
 offset_top = 250.0
-offset_right = 360.0
+offset_right = 260.0
 offset_bottom = 280.0
 text = "Play"
 
 [node name="BtnQuit" parent="." instance=ExtResource("2_ribct")]
 layout_mode = 0
+offset_left = 180.0
+offset_top = 290.0
+offset_right = 260.0
+offset_bottom = 320.0
+text = "Quit"
+
+[node name="BtnHost" parent="." instance=ExtResource("2_ribct")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 250.0
+offset_right = 360.0
+offset_bottom = 280.0
+text = "Host"
+
+[node name="BtnJoin" parent="." instance=ExtResource("2_ribct")]
+layout_mode = 0
 offset_left = 280.0
 offset_top = 290.0
 offset_right = 360.0
 offset_bottom = 320.0
-text = "Quit"
+text = "Join"

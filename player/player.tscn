@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bly5cneivyyvt"]
+[gd_scene load_steps=21 format=3 uid="uid://bly5cneivyyvt"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_8svq5"]
 [ext_resource type="Texture2D" uid="uid://birmuhjh7taoi" path="res://textures/player/player_sprite.png" id="1_k78b8"]
@@ -50,6 +50,12 @@ radius = 86.1452
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u4qb1"]
 radius = 18.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wgf50"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
@@ -251,6 +257,9 @@ columns = 10
 
 [node name="SecondTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wgf50")
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]

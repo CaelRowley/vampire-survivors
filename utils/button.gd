@@ -1,7 +1,7 @@
 class_name CustomButton
 extends Button
 
-@export var handle_press = Callable(func handle_press() -> void: print("handle_press"))
+@export var handle_press = Callable(func handle_press() -> void: pass)
 
 @onready var audio_hover := $AudioHover as AudioStreamPlayer
 @onready var audio_click := $AudioClick as AudioStreamPlayer

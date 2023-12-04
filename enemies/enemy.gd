@@ -28,6 +28,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	return
 	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
 	var direction := global_position.direction_to(player.global_position)
 	velocity = direction * speed
@@ -65,9 +66,9 @@ func _optimise_off_screen_perf(should_optimise := true) -> void:
 	audio_hit.process_mode = mode
 
 
-func _on_hurt_box_hurt(damage: float, angle: Vector2, knockback_strength: float) -> void:
+func _on_hurt_box_hurt(damage_taken: float, angle: Vector2, knockback_strength: float) -> void:
 	knockback = angle * knockback_strength
-	health -= damage
+	health -= damage_taken
 	if health <= 0:
 		die()
 	else:

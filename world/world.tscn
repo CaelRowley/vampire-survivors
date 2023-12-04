@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://tiwkth0f8ia7"]
+[gd_scene load_steps=21 format=3 uid="uid://tiwkth0f8ia7"]
 
 [ext_resource type="Texture2D" uid="uid://cxhbmigac5v66" path="res://textures/backgrounds/dirt_full_new.png" id="1_ihkmx"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_y0vpp"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://d1mhvgwfw3yxy" path="res://enemies/kobold_weak.tscn" id="3_nsf0n"]
 [ext_resource type="PackedScene" uid="uid://cqailju80xoyv" path="res://utils/enemy_spawner.tscn" id="4_l8d8r"]
 [ext_resource type="Script" path="res://utils/spawn_info.gd" id="5_hgine"]
-[ext_resource type="PackedScene" uid="uid://b8c8rx6pay2ob" path="res://loot/exp_gem.tscn" id="6_ej7ad"]
 [ext_resource type="PackedScene" uid="uid://bfrpoh06vemap" path="res://enemies/kobold_strong.tscn" id="6_rf37l"]
 [ext_resource type="PackedScene" uid="uid://cmtgx7vkijep" path="res://enemies/cyclops.tscn" id="7_x2po0"]
 [ext_resource type="PackedScene" uid="uid://dncf4dgj5o31g" path="res://enemies/juggernaut.tscn" id="8_hyqye"]
@@ -88,6 +87,7 @@ spawn_delay = 0
 [node name="World" type="Node2D"]
 show_behind_parent = true
 script = ExtResource("1_y0vpp")
+player_scene = ExtResource("2_6wnqu")
 
 [node name="Background" type="Sprite2D" parent="."]
 process_mode = 3
@@ -96,22 +96,9 @@ texture = ExtResource("1_ihkmx")
 region_enabled = true
 region_rect = Rect2(0, 0, 4000, 4000)
 
-[node name="Player" parent="." instance=ExtResource("2_6wnqu")]
-position = Vector2(14, -52)
-
 [node name="EnemySpawner" parent="." instance=ExtResource("4_l8d8r")]
+process_mode = 4
 spawns = Array[ExtResource("5_hgine")]([SubResource("Resource_1s8gn"), SubResource("Resource_dg005"), SubResource("Resource_2mh07"), SubResource("Resource_781gw"), SubResource("Resource_g7oii"), SubResource("Resource_5i4rp"), SubResource("Resource_q2wxk"), SubResource("Resource_xr23u"), SubResource("Resource_tf0wx")])
-
-[node name="ExpGem" parent="." instance=ExtResource("6_ej7ad")]
-position = Vector2(92, -77)
-
-[node name="ExpGem2" parent="." instance=ExtResource("6_ej7ad")]
-position = Vector2(129, -18)
-experience = 5
-
-[node name="ExpGem3" parent="." instance=ExtResource("6_ej7ad")]
-position = Vector2(100, 29)
-experience = 500
 
 [node name="Loot" type="Node2D" parent="."]
 
@@ -121,4 +108,6 @@ stream = ExtResource("11_4661j")
 volume_db = -15.0
 autoplay = true
 
-[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+spawn_path = NodePath("..")
